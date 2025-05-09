@@ -1,0 +1,28 @@
+name: Build and Upload Images
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Execute compile script
+      run: ./compile.sh BOARD=oec-box-wxy4 DISTRO=bookworm IMAGE_TYPE=vendor
+      working-directory: ${{ github.workspace }}
+
+    - name: Create images.tar.gz
+      run: |
+        cd output
+        tar -czvf ../images.tar.gz images/
+      working-directory: ${{ github.workspace }}
+
+    - name: Upload images.tar.gz as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: images
+        path: ${{ github.workspace }}/images.tar.gz
