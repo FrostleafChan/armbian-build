@@ -12,7 +12,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Execute compile script
-      run: ./compile.sh BOARD=oec-box-wxy4 DISTRO=bookworm IMAGE_TYPE=vendor
+      run: ./compile.sh BOARD=oec-box-wxy4 DISTRO=bookworm IMAGE_TYPE=vendor KERNEL_CONFIGURE=no
       working-directory: ${{ github.workspace }}
 
     - name: Create images.tar.gz
